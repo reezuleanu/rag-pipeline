@@ -3,7 +3,7 @@ name = "rag-pipeline"
 version = "0.1.0"
 description = "An example implementation of a RAG pipeline using LlamaIndex. This also uses Streamlit for a demo."
 readme = "README.md"
-requires-python = ">=3.11.12,<3.12"
+requires-python = ">=3.11.11,<3.12"
 dependencies = [
     "llama-index>=0.12.40",
     "streamlit>=1.45.1",
