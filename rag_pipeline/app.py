@@ -1,10 +1,29 @@
+import os
+
 import streamlit as st
+import streamlit_authenticator as stauth
 from llama_index.core import VectorStoreIndex
 from llama_index.llms.openai import OpenAI
 
-
 # keep index in memory
 index = None
+
+# get username and hashed password from env
+credentials = {
+    "usernames": {os.environ["USERNAME"]: {"password": os.environ["PASSWORD"]}}
+}
+
+authenticator = stauth.Authenticate(
+    credentials,
+    "rag_pipeline_cookie",
+    "rag_pipeline_cookie",
+)
+
+if auth_tuple := authenticator.login("main"):
+    # print(auth_tuple)
+    pass
+
+authenticator.logout(location="sidebar")
 
 
 def init_index():
