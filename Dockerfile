@@ -26,6 +26,7 @@ COPY --from=builder /app/.streamlit .
 COPY --from=builder /app/dist/*.whl .
 
 RUN pip install --no-cache-dir *.whl && rm *.whl
+RUN playwright install
 
 EXPOSE 8501
 
