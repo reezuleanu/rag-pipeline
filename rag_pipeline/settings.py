@@ -1,7 +1,7 @@
-from pydantic_settings import PydanticBaseSettingsSource
+from pydantic_settings import BaseSettings
 
 
-class Settings(PydanticBaseSettingsSource):
+class Settings(BaseSettings):
     OPENAI_API_KEY: str = ""
     USERNAME: str = "admin"
     PASSWORD: str = ""
