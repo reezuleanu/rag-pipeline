@@ -16,7 +16,7 @@ credentials = {
 authenticator = stauth.Authenticate(
     credentials,
     "rag_pipeline_cookie",
-    "rag_pipeline_cookie",
+    "rag_pipeline",
 )
 
 if auth_tuple := authenticator.login("main"):
