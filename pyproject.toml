@@ -8,6 +8,7 @@ dependencies = [
     "llama-index>=0.12.40",
     "llama-index-vector-stores-opensearch>=0.5.5",
     "playwright>=1.52.0",
+    "pydantic-settings>=2.9.1",
     "streamlit>=1.45.1",
     "streamlit-authenticator>=0.4.2",
 ]
