@@ -74,6 +74,8 @@ class BaseScraper(ABC):
 
             page.pdf(path=destination)
 
+        return destination
+
     @abstractmethod
     def cleanup_html(self, html: str) -> str:
         """Scraper specific logic to cleanup the html from a given
