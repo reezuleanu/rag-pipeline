@@ -27,6 +27,7 @@ COPY --from=builder /app/dist/*.whl .
 
 RUN pip install --no-cache-dir *.whl && rm *.whl
 RUN playwright install
+RUN playwright install-deps
 
 EXPOSE 8501
 
