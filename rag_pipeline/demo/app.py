@@ -1,17 +1,19 @@
-import os
-
 import streamlit as st
 import streamlit_authenticator as stauth
 from llama_index.core import VectorStoreIndex
+from llama_index.vector_stores.opensearch import (
+    OpensearchVectorClient,
+    OpensearchVectorStore,
+)
 from llama_index.llms.openai import OpenAI
+
+from rag_pipeline.settings import settings
 
 # keep index in memory
 index = None
 
 # get username and hashed password from env
-credentials = {
-    "usernames": {os.environ["USERNAME"]: {"password": os.environ["PASSWORD"]}}
-}
+credentials = {"usernames": {settings.USERNAME: {"password": settings.PASSWORD}}}
 
 authenticator = stauth.Authenticate(
     credentials,
@@ -29,7 +31,17 @@ authenticator.logout(location="sidebar")
 def init_index():
     global index
     if index is None:
-        index = VectorStoreIndex.from_documents([])
+        opensearch_client = OpensearchVectorClient(
+            endpoint=settings.OPENSEARCH_ENDPOINT,
+            index=settings.OPENSEARCH_INDEX,
+            dim=1536,
+            verify_certs=False,  # ignore self signed certs
+            ssl_show_warn=False,
+            http_auth=(settings.OPENSEARCH_USERNAME, settings.OPENSEARCH_PASSWORD),
+        )
+        index = VectorStoreIndex.from_vector_store(
+            OpensearchVectorStore(opensearch_client)
+        )
     return index
 
 
@@ -49,7 +61,7 @@ if "chat_engine" not in st.session_state:
     )
     index = init_index()
     st.session_state.chat_engine = index.as_chat_engine(
-        chat_mode="simple", llm=llm, verbose=True
+        chat_mode="best", llm=llm, verbose=True
     )
     st.session_state.chat_history = [("ai", "Hi, how can i help you?")]
     render_chat()
