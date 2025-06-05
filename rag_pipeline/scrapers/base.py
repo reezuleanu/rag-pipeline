@@ -27,9 +27,7 @@ class BaseScraper(ABC):
         if not cleaned_html:
             raise Exception(f"{url} is empty after html cleanup")
 
-        return self.html_to_pdf(
-            cleaned_html,
-        )
+        return self.html_to_pdf(cleaned_html, destination)
 
     def url_to_html(self, url: str, wait: int = None) -> str:
         """Download the content of a website as html
