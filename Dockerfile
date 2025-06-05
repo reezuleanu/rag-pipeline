@@ -3,16 +3,15 @@ FROM python:3.11.11 as builder
 WORKDIR /app
 
 # install uv
-RUN apt-get update && apt-get install -y curl \
-  && curl -LsSf https://astral.sh/uv/install.sh | sh \
-  && rm -rf /var/lib/apt/lists/*
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-ENV PATH="/root/.cargo/bin:$PATH"
+RUN python -m venv /venv
+ENV PATH="/venv/bin:$PATH"
 
 COPY . /app
 
 # compile project into a python package
-RUN uv pip install --no-cache hatchling \
+RUN uv pip install --no-cache hatchling build \
   && python -m build --wheel
 
 FROM python:3.11.11-slim
@@ -25,10 +24,16 @@ COPY --from=builder /app/.streamlit .
 # install compiled package
 COPY --from=builder /app/dist/*.whl .
 
+# update keys
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gnupg ca-certificates
+
 RUN pip install --no-cache-dir *.whl && rm *.whl
 RUN playwright install
 RUN playwright install-deps
 
 EXPOSE 8501
 
-CMD ["streamlit", "run", "rag_pipeline/demo/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+COPY --from=builder /app/rag_pipeline/demo/app.py /app/demo/app.py
+
+CMD ["streamlit", "run", "demo/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
