@@ -1,0 +1,37 @@
+services:
+  rag-pipeline-service:
+    container_name: rag-pipeline-container
+    build: .
+    environment:
+      - USERNAME=${USERNAME}
+      - PASSWORD=${PASSWORD}
+      - OPENSEARCH_ENDPOINT=http://opensearch-rag-pipeline:9200
+    ports:
+      - "80:8501"
+    depends_on:
+      - opensearch-rag-pipeline
+
+  opensearch-rag-pipeline:
+    container_name: opensearch-rag-pipeline
+    image: opensearchproject/opensearch:2
+    restart: unless-stopped
+    environment:
+      - cluster.name=rag-pipeline-cluster
+      - node.name=rag-pipeline-node1
+      - discovery.seed_hosts=rag-pipeline-node1
+      - cluster.initial_cluster_manager_nodes=rag-pipeline-node1
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_PASSWORD}  # USERNAME: admin
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - ./opensearch:/usr/share/opensearch/data
+    ports:
+      - 9200:9200
+      - 9600:9600
