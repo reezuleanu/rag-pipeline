@@ -5,7 +5,7 @@ services:
     environment:
       - USERNAME=${USERNAME}
       - PASSWORD=${PASSWORD}
-      - OPENSEARCH_ENDPOINT=http://opensearch-rag-pipeline:9200
+      - OPENSEARCH_ENDPOINT=https://opensearch-rag-pipeline:9200
     ports:
       - "80:8501"
     depends_on:
@@ -35,3 +35,11 @@ services:
     ports:
       - 9200:9200
       - 9600:9600
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:latest
+    container_name: opensearch-dashboards
+    ports:
+      - 5601:5601
+    environment:
+      - OPENSEARCH_HOSTS=["https://opensearch-rag-pipeline:9200"]
