@@ -37,9 +37,3 @@ class GenericScraper(BaseScraper):
         cleaned_text = " ".join(cleaned_text.split())
 
         return cleaned_text
-
-
-if __name__ == "__main__":
-    URL = "https://www.expat.hsbc.com/expat-explorer/expat-guides/spain/tax-in-spain/"
-    DESTINATION = "output.pdf"
-    GenericScraper().scrape(URL, DESTINATION)
