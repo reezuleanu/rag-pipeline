@@ -36,26 +36,3 @@ class SimplePipeline(BasePipeline):
             d.metadata["original_url"] = self.temps_to_urls.get(pdf_path, "")
 
         return documents
-
-
-if __name__ == "__main__":
-    from llama_index.vector_stores.opensearch import (
-        OpensearchVectorStore,
-        OpensearchVectorClient,
-    )
-    from rag_pipeline.settings import settings
-
-    opensearch_client = OpensearchVectorClient(
-        endpoint=settings.OPENSEARCH_ENDPOINT,
-        index="test_index",
-        dim=1536,
-        verify_certs=False,  # ignore self signed certs
-        ssl_show_warn=False,
-        http_auth=(settings.OPENSEARCH_USERNAME, settings.OPENSEARCH_PASSWORD),
-    )
-    vector_store = OpensearchVectorStore(opensearch_client)
-    urls = [
-        "https://www.expat.hsbc.com/expat-explorer/expat-guides/spain/tax-in-spain/",
-    ]
-
-    SimplePipeline(vector_store, urls).run()
