@@ -57,6 +57,7 @@ if st.session_state.get("authentication_status"):
             model=settings.OPENAI_MODEL,
             temperature=settings.LLM_TEMPERATURE,
             streaming=True,
+            system_prompt=settings.LLM_SYSTEM_PROMPT,
         )
         index = init_index()
         st.session_state.chat_engine = index.as_chat_engine(
