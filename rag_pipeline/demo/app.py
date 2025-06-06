@@ -1,3 +1,5 @@
+"""Demo app, talk with your scraped websites. Used streamlit for it's ease of use for quick demos."""
+
 import streamlit as st
 import streamlit_authenticator as stauth
 from llama_index.core import VectorStoreIndex

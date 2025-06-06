@@ -1,3 +1,5 @@
+"""Example script using the SimplePipeline class to convert urls to llm knowledge"""
+
 from llama_index.vector_stores.opensearch import (
     OpensearchVectorClient,
     OpensearchVectorStore,
