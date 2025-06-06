@@ -3,9 +3,15 @@ services:
     container_name: rag-pipeline-container
     build: .
     environment:
-      - USERNAME=${USERNAME}
-      - PASSWORD=${PASSWORD}
-      - OPENSEARCH_ENDPOINT=https://opensearch-rag-pipeline:9200
+      - APP_USERNAME=${APP_USERNAME}
+      - APP_PASSWORD=${APP_PASSWORD}
+      - OPENSEARCH_ENDPOINT=${OPENSEARCH_ENDPOINT}
+      - OPENSEARCH_USERNAME=${OPENSEARCH_USERNAME}
+      - OPENSEARCH_PASSWORD=${OPENSEARCH_PASSWORD}
+      - OPENSEARCH_INDEX=${OPENSEARCH_INDEX}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL}
+      - LLM_TEMPERATURE=${LLM_TEMPERATURE}
     ports:
       - "80:8501"
     depends_on:
