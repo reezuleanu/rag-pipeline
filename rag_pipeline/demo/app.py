@@ -43,15 +43,7 @@ authenticator = stauth.Authenticate(
     "rag_pipeline",
 )
 
-
-if st.session_state.get("authentication_status") is None:
-    authenticator.login("main")
-
-elif st.session_state.get("authentication_status") is False:
-    authenticator.login("main")
-    st.error("Username/password is incorrect")
-
-elif st.session_state.get("authentication_status"):
+if st.session_state.get("authentication_status"):
 
     def render_chat():
         for role, message in st.session_state.chat_history:
@@ -83,3 +75,10 @@ elif st.session_state.get("authentication_status"):
         with st.chat_message("ai"):
             final_response = st.write_stream(response.response_gen)
         st.session_state.chat_history.append(("ai", str(final_response)))
+
+elif st.session_state.get("authentication_status") is False:
+    authenticator.login("main")
+    st.error("Username/password is incorrect")
+
+else:
+    authenticator.login("main")
