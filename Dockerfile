@@ -19,7 +19,7 @@ FROM python:3.11.11-slim
 WORKDIR /app
 
 # copy config file
-COPY --from=builder /app/.streamlit .
+COPY --from=builder /app/.streamlit ./.streamlit
 
 # install compiled package
 COPY --from=builder /app/dist/*.whl .
