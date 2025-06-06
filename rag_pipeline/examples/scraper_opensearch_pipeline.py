@@ -20,6 +20,8 @@ vector_store = OpensearchVectorStore(opensearch_client)
 
 urls = [
     "https://www.expat.hsbc.com/expat-explorer/expat-guides/spain/tax-in-spain/",
+    "https://www.expat.hsbc.com/expat-explorer/expat-guides/united-kingdom/tax-in-united-kingdom/",
+    "https://www.expat.hsbc.com/expat-explorer/expat-guides/germany/tax-in-germany/",
 ]
 
 SimplePipeline(vector_store, urls).run()
