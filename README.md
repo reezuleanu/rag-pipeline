@@ -17,7 +17,7 @@ There is a demo available, built using Streamlit. There is also a deployed versi
 <img width="368" alt="image" src="https://github.com/user-attachments/assets/0faaa3ce-773f-4665-9f46-70be8e631ada"/>
 
 ### Checking the data
-You can see the indexed data, extracted metadatas, and embeddings by accessing `Opensearch Dashboards`, at port `5601` ([Deployed Version](http://172.104.142.244/)).
+You can see the indexed data, extracted metadatas, and embeddings by accessing `Opensearch Dashboards`, at port `5601` ([Deployed Version](http://172.104.142.244:5601/)).
 
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/19b50eec-bc0b-43a8-b575-ba38fd9ba2e9" />
 
